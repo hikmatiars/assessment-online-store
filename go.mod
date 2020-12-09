@@ -1,4 +1,4 @@
-module core-project
+module assessment-online-store
 
 go 1.14
 

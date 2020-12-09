@@ -1,21 +1,26 @@
 package main
 
 import (
+	"assessment-online-store/entity"
+	"assessment-online-store/http/api"
+	"assessment-online-store/router"
+	"assessment-online-store/usecase"
 	"context"
-	"core-project/http/api"
-	"core-project/router"
-	"core-project/usecase"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
 )
 
+func init()  {
+	entity.SeedData()
+}
+
 func main() {
 	var httpAddr = flag.String("http", ":"+"8080", "HTTP Listen address")
 	//init context
 	ctx := context.Background()
-	uc := usecase.NewUseCase(ctx)
+	uc := usecase.NewUseCase(ctx, entity.Inventories)
 
 	//make error channel
 	errs := make(chan error)
