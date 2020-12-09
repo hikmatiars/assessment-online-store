@@ -6,3 +6,5 @@ type Cart struct {
 	Quantity    int `json:"quantity"`
 	Price       int `json:"price"`
 }
+
+var Carts []*Cart

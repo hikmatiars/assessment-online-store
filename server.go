@@ -20,7 +20,7 @@ func main() {
 	var httpAddr = flag.String("http", ":"+"8080", "HTTP Listen address")
 	//init context
 	ctx := context.Background()
-	uc := usecase.NewUseCase(ctx, entity.Inventories)
+	uc := usecase.NewUseCase(ctx, entity.Inventories, entity.Carts)
 
 	//make error channel
 	errs := make(chan error)

@@ -65,3 +65,25 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 		"data"         : nil,
 	})
 }
+
+func (h *Handler) GetListCartHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	code, resp := h.Usecase.GetListCartUseCase()
+	if code == http.StatusNoContent {
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"code" : http.StatusNoContent,
+			"code_message" : "Empty Cart",
+			"code_type"    : "empty",
+			"data"         : []map[string]interface{}{},
+		})
+		return
+	}
+
+	_ = json.NewEncoder(w).Encode(map[string]interface{}{
+		"code" : http.StatusOK,
+		"code_message" : "Success",
+		"code_type"    : "success",
+		"data"         : resp,
+	})
+}

@@ -12,6 +12,7 @@ import(
 type InterfaceUseCase interface {
 	GetListProductUseCase() []*entity.ProductInventory
 	AddCartUseCase(req request.AddToCart ) (int, error)
+	GetListCartUseCase() (int, []*entity.Cart)
 }
 
 type UseCase struct {
@@ -48,4 +49,12 @@ func (uc *UseCase) AddCartUseCase(req request.AddToCart ) (int, error) {
 	})
 
 	return http.StatusOK, nil
+}
+
+func (uc *UseCase) GetListCartUseCase() (int, []*entity.Cart) {
+	if len(uc.Cart) == 0 {
+		return http.StatusNoContent, uc.Cart
+	}
+
+	return http.StatusOK, uc.Cart
 }
