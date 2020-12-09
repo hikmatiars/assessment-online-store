@@ -25,7 +25,7 @@ func (h *Handler) GetListProductHandler(w http.ResponseWriter, r *http.Request) 
 	_ = json.NewEncoder(w).Encode(map[string]interface{}{
 		"code" : http.StatusOK,
 		"code_message" : "Success",
-		"code_type"    : "success",
+		"code_type"    : util.CodeHttp( http.StatusOK ),
 		"data"         : resp,
 	})
 }
@@ -44,7 +44,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"code" : http.StatusBadRequest,
 			"code_message" : "Success",
-			"code_type"    : "success",
+			"code_type"    : util.CodeHttp( http.StatusBadRequest ),
 			"data"         : nil,
 		})
 		return
@@ -55,7 +55,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"code" : code,
 			"code_message" : err.Error(),
-			"code_type"    : "success",
+			"code_type"    : util.CodeHttp( code ),
 			"data"         : nil,
 		})
 		return
@@ -64,7 +64,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(map[string]interface{}{
 		"code" : http.StatusOK,
 		"code_message" : "Success add to cart",
-		"code_type"    : "success",
+		"code_type"    : util.CodeHttp( http.StatusOK ),
 		"data"         : nil,
 	})
 }
@@ -77,7 +77,7 @@ func (h *Handler) GetListCartHandler(w http.ResponseWriter, r *http.Request) {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"code" : http.StatusNoContent,
 			"code_message" : "Empty Cart",
-			"code_type"    : "empty",
+			"code_type"    : util.CodeHttp( http.StatusNoContent ),
 			"data"         : []map[string]interface{}{},
 		})
 		return
@@ -86,7 +86,7 @@ func (h *Handler) GetListCartHandler(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(map[string]interface{}{
 		"code" : http.StatusOK,
 		"code_message" : "Success",
-		"code_type"    : "success",
+		"code_type"    : util.CodeHttp( http.StatusOK ),
 		"data"         : resp,
 	})
 }
