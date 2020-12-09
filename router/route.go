@@ -19,7 +19,7 @@ func NewHttpServer(ctx context.Context, apiHandler *api.Handler) http.Handler {
 	})
 
 	route.HandleFunc("/api/list-product", apiHandler.GetListProductHandler).Methods("GET")
-	route.HandleFunc("/api/add-cart", apiHandler.)
+	route.HandleFunc("/api/add-cart", apiHandler.AddCartHandler).Methods("POST")
 
 	return route
 }
