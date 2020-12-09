@@ -10,3 +10,7 @@ func RandomString(n int) string {
 	}
 	return string(b)
 }
+
+func Random( count int ) int {
+	return rand.Int() % count
+}
