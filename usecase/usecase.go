@@ -1,6 +1,6 @@
 package usecase
 
-import(
+import (
 	"assessment-online-store/entity"
 	"assessment-online-store/http/request"
 	"context"
@@ -34,17 +34,38 @@ func (uc *UseCase) GetListProductUseCase() []*entity.ProductInventory {
 }
 
 func (uc *UseCase) AddCartUseCase(req request.AddToCart ) (int, error) {
-	index := req.ProductId
-	if req.Quantity >= uc.Inventories[index].ProductStock {
+	var index int
+
+	//get index with sampe product id
+	for i, inventory := range uc.Inventories {
+		if inventory.ProductId == req.ProductId {
+			index = i
+			break
+		}
+	}
+
+	if req.Quantity > uc.Inventories[index].ProductStock {
 		return http.StatusUnprocessableEntity, errors.New("product out of stock")
 	}
 
 	uc.Inventories[index].ProductStock -= req.Quantity
 
+	if len(uc.Cart) > 0 {
+		//checking product id is exist or not on list cart
+		for i, val := range uc.Cart {
+			if val.ProductId == req.ProductId {
+				uc.Cart[i].Quantity += req.Quantity
+				break
+			}
+		}
+
+		return http.StatusOK, nil
+	}
+
 	uc.Cart = append(uc.Cart, &entity.Cart{
 		ProductId: uc.Inventories[index].ProductId,
 		ProductName: uc.Inventories[index].ProductName,
-		Quantity: uc.Inventories[index].ProductStock,
+		Quantity: req.Quantity,
 		Price: uc.Inventories[index].Price,
 	})
 

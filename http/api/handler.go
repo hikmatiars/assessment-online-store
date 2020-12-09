@@ -1,6 +1,6 @@
 package api
 
-import(
+import (
 	"assessment-online-store/http/request"
 	"assessment-online-store/usecase"
 	"encoding/json"
@@ -37,8 +37,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	InputAddCart = request.AddToCart{}
-	err = json.NewDecoder(r.Body).Decode(&r)
-
+	err = json.NewDecoder(r.Body).Decode(&InputAddCart)
 	if err != nil {
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"code" : http.StatusBadRequest,
@@ -46,6 +45,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 			"code_type"    : "success",
 			"data"         : nil,
 		})
+		return
 	}
 
 	code, err = h.Usecase.AddCartUseCase( InputAddCart )
@@ -56,6 +56,7 @@ func (h *Handler) AddCartHandler(w http.ResponseWriter, r *http.Request) {
 			"code_type"    : "success",
 			"data"         : nil,
 		})
+		return
 	}
 
 	_ = json.NewEncoder(w).Encode(map[string]interface{}{
