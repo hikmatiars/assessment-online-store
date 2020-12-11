@@ -16,7 +16,7 @@ type ProductInventory struct {
 
 var (
 	Inventories []*ProductInventory
-	totalProduct = 5
+	TotalProduct = 5
 )
 
 func SeedData() []*ProductInventory {
@@ -28,18 +28,20 @@ func SeedData() []*ProductInventory {
 		1200000,
 	}
 
-	for i := 1; i < totalProduct; i++ {
+	productId := 1
+	for i := 0; i < TotalProduct; i++ {
 		n := util.Random( len(priceRandom) )
 		productCode := util.RandomString( 5 )
 		productName := fmt.Sprintf("Product Test-%v", i)
 		Inventories = append(Inventories, &ProductInventory{
-			ProductId: i,
+			ProductId: productId,
 			ProductName: productName,
 			ProductCode: productCode,
 			ProductStock: 5,
 			Price: priceRandom[n],
 			PriceFlashSale: 12000, //Flash Sale 12.12
 		})
+		productId += 1
 	}
 
 	return Inventories

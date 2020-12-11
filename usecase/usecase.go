@@ -40,14 +40,22 @@ func (uc *UseCase) GetListProductUseCase() []*entity.ProductInventory {
 }
 
 func (uc *UseCase) AddCartUseCase(req request.AddToCart ) (int, error) {
-	var index int
+	var (
+		index int
+		flagFound bool
+	)
 
 	//get index with sampe product id
 	for i, inventory := range uc.Inventories {
 		if inventory.ProductId == req.ProductId {
 			index = i
+			flagFound = true
 			break
 		}
+	}
+
+	if !flagFound {
+		return http.StatusNoContent, errors.New("not found product")
 	}
 
 	if req.Quantity > uc.Inventories[index].ProductStock {
@@ -55,7 +63,6 @@ func (uc *UseCase) AddCartUseCase(req request.AddToCart ) (int, error) {
 	}
 
 	uc.Inventories[index].ProductStock -= req.Quantity
-
 	if len(uc.Cart) > 0 {
 		//checking product id is exist or not on list cart
 		for i, val := range uc.Cart {
