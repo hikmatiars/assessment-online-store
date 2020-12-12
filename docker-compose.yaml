@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  app:
+    # Configuration for building the docker image for the service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+
+    container_name: assessment-online-store
+    image: assessment-online-store
+    ports:
+      - "8080:8080"
